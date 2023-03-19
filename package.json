@@ -4,6 +4,7 @@
   "description": "a platform to buy and sell books",
   "main": "index.js",
   "scripts": {
+    "start": "src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/PrakashYashwanth/online_book_store/issues"
   },
-  "homepage": "https://github.com/PrakashYashwanth/online_book_store#readme"
+  "homepage": "https://github.com/PrakashYashwanth/online_book_store#readme",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
