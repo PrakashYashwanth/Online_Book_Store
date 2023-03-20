@@ -6,8 +6,26 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   mode: MODE,
 
+  output: {
+    // To organize images into a single folder
+    assetModuleFilename: "images/[hash][ext][query]",
+  },
+
   module: {
     rules: [
+      {
+        // to handel all types of images
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        // type: "asset/inline", => this will add the images inline instead of outputting it seperately in dist folder
+        // type: "asset/resource", => adds the image to images folder
+        type: "asset", // Determined by the webpack as inline or not based on size. Max size for inline is 8kb
+        // to define our specified size instead of default 8kb
+        // parser: {
+        //   dataUrlCondition: {
+        //     maxSize: 30 * 1024, => 30 bytes
+        //   },
+        // },
+      },
       {
         //"jsx?" here means it may or may not have x
         test: /\.jsx?$/,
@@ -19,7 +37,7 @@ module.exports = {
       },
       {
         // supports scss, sass, css
-        test: /\.(s[ac]|c)ss$/,
+        test: /\.(s[ac]|c)ss$/i,
         use: [
           // order of adding items is important. Loaders are evaluated/executed from right to left (or from bottom to top)
           MiniCssExtractPlugin.loader,
