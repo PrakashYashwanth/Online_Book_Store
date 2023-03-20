@@ -1,12 +1,16 @@
+const path = require("path");
+
 const MODE = process.env.NODE_ENV || "development";
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   mode: MODE,
 
   output: {
+    path: path.resolve(__dirname, "dist"),
     // To organize images into a single folder
     assetModuleFilename: "images/[hash][ext][query]",
   },
@@ -50,10 +54,11 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
-    new MiniCssExtractPlugin(),
   ],
 
   resolve: {
