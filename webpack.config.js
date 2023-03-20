@@ -9,15 +9,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        //"jsx?" here means it may or may not have x
+        test: /\.jsx?$/,
+        // excluding node modules js files as they are not required and time consuming
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
         },
       },
       {
+        // supports scss, sass, css
         test: /\.(s[ac]|c)ss$/,
         use: [
+          // order of adding items is important. Loaders are evaluated/executed from right to left (or from bottom to top)
           MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
@@ -33,6 +37,10 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
   ],
+
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 
   devtool: "source-map",
 };
