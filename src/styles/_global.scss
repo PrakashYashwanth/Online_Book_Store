@@ -1,0 +1,6 @@
+@use "variables";
+
+.App {
+  background: variables.$bg;
+  color: var(--text);
+}
