@@ -1,5 +1,7 @@
 const MODE = process.env.NODE_ENV || "development";
 
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
 module.exports = {
   mode: MODE,
 
@@ -15,5 +17,11 @@ module.exports = {
     ],
   },
 
-  devtool: false,
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+  ],
+
+  devtool: "source-map",
 };

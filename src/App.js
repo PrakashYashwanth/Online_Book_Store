@@ -1,5 +1,6 @@
-function App() {
-  console.log("Came into App");
+import React from "react";
+
+const App = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -11,6 +12,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
