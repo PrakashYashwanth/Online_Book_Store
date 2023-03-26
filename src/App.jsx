@@ -1,18 +1,24 @@
-import mountains from "../public/images/mountains.jpg";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Login from "./components/atom/Login/Login";
+import Footer from "./components/charges/Footer/Footer";
+import NavBar from "./components/charges/NavBar/NavBar";
+import SignUpModal from "./components/charges/SignUpModal/SignUpModal";
+import "./App.scss";
 
-const App = () => {
+function App() {
   return (
-    <div className="App">
-      <img src={mountains} alt="mountains" width="350" />
-      <header className="App-header">
-        <h1>Online Book Store</h1>
-        <p>
-          An app for selling and buying books with user friendly interface
-          compatible for all divices
-        </p>
-      </header>
-    </div>
+    <>
+      <NavBar />
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+      </Switch>
+      <Footer />
+      <SignUpModal />
+    </>
   );
-};
+}
 
 export default App;
