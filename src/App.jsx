@@ -1,24 +1,13 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
-import Login from "./components/atom/Login/Login";
-import Footer from "./components/charges/Footer/Footer";
-import NavBar from "./components/charges/NavBar/NavBar";
-import SignUpModal from "./components/charges/SignUpModal/SignUpModal";
-import "./App.scss";
+import LoginPage from "./components/LoginPage/LoginPage";
+import NavBar from "./components/NavBar/NavBar";
 
-function App() {
+const App = () => {
   return (
-    <>
+    <div className="app">
       <NavBar />
-      <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-      </Switch>
-      <Footer />
-      <SignUpModal />
-    </>
+      <LoginPage />
+    </div>
   );
-}
+};
 
 export default App;

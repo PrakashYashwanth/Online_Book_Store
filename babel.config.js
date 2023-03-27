@@ -1,3 +1,4 @@
+//To enable babel
 module.exports = {
   presets: [
     "@babel/preset-env",
