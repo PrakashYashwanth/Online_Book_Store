@@ -8,6 +8,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const validationSchema = yup.object({
   email: yup
@@ -22,6 +23,7 @@ const validationSchema = yup.object({
 
 const LoginForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const matches = useMediaQuery((theme) => theme.breakpoints.down("laptop"));
 
   const formik = useFormik({
     initialValues: {
@@ -49,8 +51,10 @@ const LoginForm = ({ displayingSignup }) => {
       <Typography variant="h3" gutterBottom>
         Login Page
       </Typography>
-
-      <FormControl sx={{ m: 1, width: "50ch" }} variant="standard">
+      <FormControl
+        sx={{ m: 1, width: "-webkit-fill-available" }}
+        variant="standard"
+      >
         <TextField
           label="Email Id"
           id="standard-adornment-email"
@@ -64,7 +68,7 @@ const LoginForm = ({ displayingSignup }) => {
         />
       </FormControl>
       <FormControl
-        sx={{ m: 1, width: "50ch", mb: "1.5rem" }}
+        sx={{ m: 1, width: "-webkit-fill-available", mb: "1.5rem" }}
         variant="standard"
       >
         <TextField
@@ -91,16 +95,22 @@ const LoginForm = ({ displayingSignup }) => {
           required
         />
       </FormControl>
-      <Stack spacing={5} direction="row">
+      <Stack spacing={matches ? 0 : 5} direction="row" flexWrap={"wrap"}>
         <Button variant="contained" onClick={formik.handleSubmit}>
           Login
         </Button>
-        <Typography variant="subtitle1">
-          Don't have an account yet?
+        {matches ? (
           <Button variant="text" onClick={() => displayingSignup(true)}>
             SignUp
           </Button>
-        </Typography>
+        ) : (
+          <Typography variant="subtitle1">
+            Don't have an account yet?
+            <Button variant="text" onClick={() => displayingSignup(true)}>
+              SignUp
+            </Button>
+          </Typography>
+        )}
       </Stack>
     </Box>
   );

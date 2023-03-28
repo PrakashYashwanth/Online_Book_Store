@@ -6,20 +6,16 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import * as yup from "yup";
+import { object, string } from "yup";
 import { useFormik } from "formik";
 
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string()
+const validationSchema = object({
+  userName: string().required("User Name is required"),
+  email: string().email("Enter a valid email").required("Email is required"),
+  password: string()
     .min(8, "Password should be of minimum 8 characters length")
     .required("Password is required"),
-  confirmPassword: yup
-    .string()
+  confirmPassword: string()
     .min(8, "Confirm Password should be of minimum 8 characters length")
     .required("Confirm Password is required"),
 });
@@ -30,6 +26,7 @@ const SignupForm = ({ displayingSignup }) => {
 
   const formik = useFormik({
     initialValues: {
+      userName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -59,7 +56,27 @@ const SignupForm = ({ displayingSignup }) => {
         SignUp Page
       </Typography>
 
-      <FormControl sx={{ m: 1, width: "50ch" }} variant="standard">
+      <FormControl
+        sx={{ m: 1, width: "-webkit-fill-available" }}
+        variant="standard"
+      >
+        <TextField
+          id="standard-adornment-user-name"
+          label="User Name"
+          type={"text"}
+          name="userName"
+          value={formik.values.userName}
+          onChange={formik.handleChange}
+          error={formik.touched.userName && Boolean(formik.errors.userName)}
+          helperText={formik.touched.userName && formik.errors.userName}
+          required
+        />
+      </FormControl>
+
+      <FormControl
+        sx={{ m: 1, width: "-webkit-fill-available" }}
+        variant="standard"
+      >
         <TextField
           label="Email Id"
           id="standard-adornment-email"
@@ -72,7 +89,10 @@ const SignupForm = ({ displayingSignup }) => {
           required
         />
       </FormControl>
-      <FormControl sx={{ m: 1, width: "50ch" }} variant="standard">
+      <FormControl
+        sx={{ m: 1, width: "-webkit-fill-available" }}
+        variant="standard"
+      >
         <TextField
           id="standard-adornment-password"
           label="Password"
@@ -98,7 +118,7 @@ const SignupForm = ({ displayingSignup }) => {
         />
       </FormControl>
       <FormControl
-        sx={{ m: 1, width: "50ch", mb: "1.5rem" }}
+        sx={{ m: 1, width: "-webkit-fill-available", mb: "1.5rem" }}
         variant="standard"
       >
         <TextField
