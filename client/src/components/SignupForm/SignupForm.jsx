@@ -8,6 +8,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { object, string } from "yup";
 import { useFormik } from "formik";
+import axios from "axios";
 
 const validationSchema = object({
   userName: string().required("User Name is required"),
@@ -23,6 +24,7 @@ const validationSchema = object({
 const SignupForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [responseError, setResponseError] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -32,10 +34,19 @@ const SignupForm = ({ displayingSignup }) => {
       confirmPassword: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values, { resetForm }) => {
       if (values.password !== values.confirmPassword) setShowError(true);
       else {
         setShowError(false);
+        console.log(values);
+        const response = await axios.post("http://localhost:5000/api/signup", {
+          userName: values.userName,
+          email: values.email,
+          password: values.password,
+        });
+        console.log("response", response);
+        resetForm({ values: "" });
+        if (response.data.error) setResponseError(error);
       }
     },
   });
@@ -141,6 +152,11 @@ const SignupForm = ({ displayingSignup }) => {
       {showError && (
         <Typography variation="h6" sx={{ color: "red" }} gutterBottom>
           Please Check your password
+        </Typography>
+      )}
+      {responseError && (
+        <Typography variation="h6" sx={{ color: "red" }} gutterBottom>
+          {responseError}
         </Typography>
       )}
       <Stack spacing={10} direction="row">

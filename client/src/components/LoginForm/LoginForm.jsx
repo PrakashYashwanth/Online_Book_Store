@@ -9,6 +9,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import axios from "axios";
 
 const validationSchema = yup.object({
   email: yup
@@ -31,8 +32,18 @@ const LoginForm = ({ displayingSignup }) => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values, { resetForm }) => {
       console.log(values);
+      try {
+        const response = await axios.post("http://localhost:5000/api/login", {
+          email: values.email,
+          password: values.password,
+        });
+        console.log("response", response);
+        resetForm({ values: "" });
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
