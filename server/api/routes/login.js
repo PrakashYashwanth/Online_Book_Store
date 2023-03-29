@@ -1,35 +1,31 @@
-const pool = require("../../db");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const executeQuery = require("../../dbQuery");
 
 module.exports = (router) => {
-  router.post("/login", (req, res) => {
+  router.post("/login", async (req, res) => {
     const { email, password } = req.body;
-    console.log(email, password);
-    // Check if the username or email already exists in the database
-    pool.query(
-      "SELECT * FROM users WHERE email = ? AND password = ?",
-      [email, password],
-      (error, results) => {
-        if (error) {
-          res.status(500).json({
-            error: true,
-            message: "Error checking for existing user",
-          });
-        } else if (results.length > 0) {
-          console.log(results);
-          const { username: userName } = results[0];
-          res.status(200).json({
-            data: userName,
-            success: true,
-            message: "Success",
-          });
-        } else {
-          // Insert the new user into the database
-          res.status(404).json({
-            error: true,
-            message: "User doesn't exist",
-          });
-        }
-      }
-    );
+
+    // Check if the user exists in the database
+    const checkUserQuery = "SELECT * FROM users WHERE email = ?";
+    const checkUserValues = [email];
+    const user = await executeQuery(checkUserQuery, checkUserValues);
+
+    if (user.length === 0) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+    // Compare the password with the hashed password stored in the database
+    const isPasswordValid = await bcrypt.compare(password, user[0].password);
+
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid email or password" });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.json({ message: "User logged in successfully", token });
   });
 };

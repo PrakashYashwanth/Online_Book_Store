@@ -38,15 +38,23 @@ const SignupForm = ({ displayingSignup }) => {
       if (values.password !== values.confirmPassword) setShowError(true);
       else {
         setShowError(false);
-        console.log(values);
-        const response = await axios.post("http://localhost:5000/api/signup", {
-          userName: values.userName,
-          email: values.email,
-          password: values.password,
-        });
-        console.log("response", response);
-        resetForm({ values: "" });
-        if (response.data.error) setResponseError(error);
+        try {
+          const response = await axios.post(
+            "http://localhost:5000/api/signup",
+            {
+              userName: values.userName,
+              email: values.email,
+              password: values.password,
+            }
+          );
+          resetForm({ values: "" });
+          if (response.status === 201) {
+            setResponseError("");
+            sessionStorage.setItem("WEB_AUTH_TOKEN", response.data.token);
+          }
+        } catch (err) {
+          setResponseError(err.response.data.message);
+        }
       }
     },
   });
@@ -66,6 +74,12 @@ const SignupForm = ({ displayingSignup }) => {
       <Typography variant="h3" gutterBottom>
         SignUp Page
       </Typography>
+
+      {responseError && (
+        <Typography variation="h6" sx={{ color: "red" }} gutterBottom>
+          {responseError}
+        </Typography>
+      )}
 
       <FormControl
         sx={{ m: 1, width: "-webkit-fill-available" }}
@@ -152,11 +166,6 @@ const SignupForm = ({ displayingSignup }) => {
       {showError && (
         <Typography variation="h6" sx={{ color: "red" }} gutterBottom>
           Please Check your password
-        </Typography>
-      )}
-      {responseError && (
-        <Typography variation="h6" sx={{ color: "red" }} gutterBottom>
-          {responseError}
         </Typography>
       )}
       <Stack spacing={10} direction="row">

@@ -24,6 +24,7 @@ const validationSchema = yup.object({
 
 const LoginForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const matches = useMediaQuery((theme) => theme.breakpoints.down("laptop"));
 
   const formik = useFormik({
@@ -33,16 +34,18 @@ const LoginForm = ({ displayingSignup }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
       try {
         const response = await axios.post("http://localhost:5000/api/login", {
           email: values.email,
           password: values.password,
         });
-        console.log("response", response);
         resetForm({ values: "" });
+        if (response.status === 200) {
+          setErrorMessage("");
+          sessionStorage.setItem("WEB_AUTH_TOKEN", response.data.token);
+        }
       } catch (err) {
-        console.log(err);
+        setErrorMessage(err.response.data.message);
       }
     },
   });
@@ -62,6 +65,11 @@ const LoginForm = ({ displayingSignup }) => {
       <Typography variant="h3" gutterBottom>
         Login Page
       </Typography>
+      {errorMessage && (
+        <Typography variant="h6" color={"red"} gutterBottom>
+          {errorMessage}
+        </Typography>
+      )}
       <FormControl
         sx={{ m: 1, width: "-webkit-fill-available" }}
         variant="standard"

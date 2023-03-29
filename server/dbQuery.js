@@ -1,16 +1,14 @@
-const pool = require("./db");
+const connection = require("./db");
 
-module.exports = {
-  // Define methods for executing SQL queries
-  executeQuery: (query, params, callback) => {
-    pool.getConnection((err, connection) => {
-      if (err) return callback(err);
-
-      connection.query(query, params, (err, results, fields) => {
-        connection.release();
-        if (err) return callback(err);
-        callback(null, results, fields);
-      });
-    });
-  },
+const executeQuery = async (query, values) => {
+  try {
+    const getConnection = await connection;
+    const [rows] = await getConnection.query(query, values);
+    return rows;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
+
+module.exports = executeQuery;
