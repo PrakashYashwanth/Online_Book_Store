@@ -12,11 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
+import AdbIcon from "@mui/icons-material/Adb";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const loggedIn = false;
+const loggedIn = sessionStorage.getItem("WEB_AUTH_TOKEN");
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -141,8 +142,8 @@ function NavBar() {
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt="Remy Sharp"
-                      src="/static/images/avatar/2.jpg"
+                      alt="Prakash Yashwanth"
+                      src="/images/avatar/2.jpg"
                     />
                   </IconButton>
                 </Tooltip>
