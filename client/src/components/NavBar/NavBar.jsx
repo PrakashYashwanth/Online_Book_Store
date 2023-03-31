@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,15 +12,15 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
+import { BookContext } from "../../store/contextStore";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-const isloggedIn = sessionStorage.getItem("WEB_AUTH_TOKEN");
-
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [state] = useContext(BookContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,7 +37,7 @@ function NavBar() {
     setAnchorElUser(null);
   };
 
-  if (!isloggedIn) {
+  if (!state.authorizationToken) {
     return (
       <AppBar position="static">
         <Container maxWidth="xl">
@@ -158,7 +158,7 @@ function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Yash" src="/images/yash-profile.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

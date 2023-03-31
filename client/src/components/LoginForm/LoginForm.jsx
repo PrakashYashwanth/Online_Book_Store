@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -10,6 +10,10 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
+import { BookContext } from "../../store/contextStore";
+import addAuthToken from "../../store/actions";
+import { SET_AUTHORIZATION_TOKEN } from "../../store/constants";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   email: yup
@@ -25,6 +29,8 @@ const validationSchema = yup.object({
 const LoginForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const [_, dispatch] = useContext(BookContext);
   const mdMatches = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const SmMatches = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
@@ -43,7 +49,13 @@ const LoginForm = ({ displayingSignup }) => {
         resetForm({ values: "" });
         if (response.status === 200) {
           setErrorMessage("");
-          sessionStorage.setItem("WEB_AUTH_TOKEN", response.data.token);
+          dispatch(
+            addAuthToken({
+              type: SET_AUTHORIZATION_TOKEN,
+              token: response.data.token,
+            })
+          );
+          navigate("/home");
         }
       } catch (err) {
         setErrorMessage(err.response.data.message);

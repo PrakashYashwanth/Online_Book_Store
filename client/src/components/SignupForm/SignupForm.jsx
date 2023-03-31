@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -9,6 +9,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import { object, string } from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
+import { BookContext } from "../../store/contextStore";
 
 const validationSchema = object({
   userName: string().required("User Name is required"),
@@ -25,6 +26,7 @@ const SignupForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showError, setShowError] = useState(false);
   const [responseError, setResponseError] = useState("");
+  const [_, dispatch] = useContext(BookContext);
 
   const formik = useFormik({
     initialValues: {
@@ -50,7 +52,12 @@ const SignupForm = ({ displayingSignup }) => {
           resetForm({ values: "" });
           if (response.status === 201) {
             setResponseError("");
-            sessionStorage.setItem("WEB_AUTH_TOKEN", response.data.token);
+            dispatch(
+              addAuthToken({
+                type: SET_AUTHORIZATION_TOKEN,
+                token: response.data.token,
+              })
+            );
           }
         } catch (err) {
           setResponseError(err.response.data.message);

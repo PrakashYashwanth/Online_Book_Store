@@ -66,4 +66,10 @@ module.exports = {
   },
 
   devtool: "source-map",
+
+  //Webpack doesn't know what it should serve on the specific route if you navigate by changing the browser url. So, adding the
+  //below code fixes it
+  devServer: {
+    historyApiFallback: true,
+  },
 };
