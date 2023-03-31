@@ -4,6 +4,7 @@
     "start": "nodemon -r dotenv/config index"
   },
   "devDependencies": {
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.22"
   },
   "dependencies": {

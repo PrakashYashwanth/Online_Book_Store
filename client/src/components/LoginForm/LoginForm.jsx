@@ -25,7 +25,8 @@ const validationSchema = yup.object({
 const LoginForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const matches = useMediaQuery((theme) => theme.breakpoints.down("laptop"));
+  const mdMatches = useMediaQuery((theme) => theme.breakpoints.down("md"));
+  const SmMatches = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const formik = useFormik({
     initialValues: {
@@ -114,11 +115,15 @@ const LoginForm = ({ displayingSignup }) => {
           required
         />
       </FormControl>
-      <Stack spacing={matches ? 0 : 5} direction="row" flexWrap={"wrap"}>
+      <Stack
+        spacing={mdMatches || SmMatches ? 0 : 5}
+        direction={SmMatches ? "column" : "row"}
+        flexWrap={"wrap"}
+      >
         <Button variant="contained" onClick={formik.handleSubmit}>
           Login
         </Button>
-        {matches ? (
+        {mdMatches || SmMatches ? (
           <Button variant="text" onClick={() => displayingSignup(true)}>
             SignUp
           </Button>
