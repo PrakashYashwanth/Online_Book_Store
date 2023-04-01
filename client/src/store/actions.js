@@ -5,4 +5,10 @@ const addAuthToken = ({ type, token }) => {
   };
 };
 
-export default addAuthToken;
+const removeAuthToken = ({ type }) => {
+  return {
+    type,
+  };
+};
+
+export { addAuthToken, removeAuthToken };

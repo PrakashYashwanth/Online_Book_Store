@@ -13,6 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
 import { BookContext } from "../../store/contextStore";
+import { removeAuthToken } from "../../store/actions";
+import { REMOVE_AUTHORIZATION_TOKEN } from "../../store/constants";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -20,21 +23,34 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state] = useContext(BookContext);
+  const [state, dispatch] = useContext(BookContext);
+
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    console.log("handleOpenNavMenu clicked", event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    console.log("handleOpenUserMenu clicked", event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
     setAnchorElNav(null);
+    console.log("handleCloseNavMenu clicked", event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
+    if (event.target.textContent === "Logout") {
+      dispatch(
+        removeAuthToken({
+          type: REMOVE_AUTHORIZATION_TOKEN,
+        })
+      );
+      navigate("/");
+    }
   };
 
   if (!state.authorizationToken) {

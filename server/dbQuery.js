@@ -1,9 +1,9 @@
 const connection = require("./db");
 
+//This function takes in query, values and returns an array of objects of output rows
 const executeQuery = async (query, values) => {
   try {
-    const getConnection = await connection;
-    const [rows] = await getConnection.query(query, values);
+    const [rows] = await connection.query(query, values);
     return rows;
   } catch (err) {
     console.error(err);

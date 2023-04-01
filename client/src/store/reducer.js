@@ -1,4 +1,7 @@
-import { SET_AUTHORIZATION_TOKEN } from "./constants";
+import {
+  SET_AUTHORIZATION_TOKEN,
+  REMOVE_AUTHORIZATION_TOKEN,
+} from "./constants";
 
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +9,12 @@ const Reducer = (state, action) => {
       return {
         ...state,
         authorizationToken: action.payload,
+      };
+    }
+    case REMOVE_AUTHORIZATION_TOKEN: {
+      return {
+        ...state,
+        authorizationToken: "",
       };
     }
     default:
