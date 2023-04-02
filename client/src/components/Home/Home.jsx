@@ -27,7 +27,7 @@ const Home = () => {
       </Box>
     );
 
-  return <div>Home</div>;
+  return <div>Welcome to the Book Store</div>;
 };
 
 export default Home;
