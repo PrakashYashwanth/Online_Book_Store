@@ -49,6 +49,7 @@ function NavBar() {
           type: REMOVE_AUTHORIZATION_TOKEN,
         })
       );
+      sessionStorage.removeItem("Auth_Token");
       navigate("/");
     }
   };
@@ -90,7 +91,7 @@ function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },

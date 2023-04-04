@@ -3,6 +3,8 @@ import { BookContext } from "../../store/contextStore";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
+import CardComponent from "../CardComponent/CardComponent";
+import "./Home.scss";
 
 const Home = () => {
   const [state] = useContext(BookContext);
@@ -45,17 +47,9 @@ const Home = () => {
     );
 
   return (
-    <div>
+    <div className="bookCards">
       {booksData.map((book) => (
-        <div key={book.id}>
-          <p>ID: {book.id}</p>
-          <p>Author ID: {book.author_id}</p>
-          <p>Title: {book.title}</p>
-          <p>Cover Img: {book.cover_image}</p>
-          <p>Pages: {book.pages}</p>
-          <p>Release Date: {book.releaseDate}</p>
-          <p>ISBN: {book.isbn}</p>
-        </div>
+        <CardComponent book={book} />
       ))}
     </div>
   );

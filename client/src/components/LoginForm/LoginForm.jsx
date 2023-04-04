@@ -55,6 +55,7 @@ const LoginForm = ({ displayingSignup }) => {
               token: response.data.token,
             })
           );
+          sessionStorage.setItem("Auth_Token", response.data.token);
           navigate("/home");
         }
       } catch (err) {

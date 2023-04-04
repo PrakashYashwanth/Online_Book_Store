@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -27,6 +28,7 @@ const SignupForm = ({ displayingSignup }) => {
   const [showError, setShowError] = useState(false);
   const [responseError, setResponseError] = useState("");
   const [_, dispatch] = useContext(BookContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -58,9 +60,11 @@ const SignupForm = ({ displayingSignup }) => {
                 token: response.data.token,
               })
             );
+            sessionStorage.setItem("Auth_Token", response.data.token);
           }
         } catch (err) {
           setResponseError(err.response.data.message);
+          navigate("/home");
         }
       }
     },
