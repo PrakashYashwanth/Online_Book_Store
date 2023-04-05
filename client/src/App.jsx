@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar/NavBar";
 import NotFound from "./components/NotFound/NotFound";
 import { BookContext, initialState } from "./store/contextStore";
 import Reducer from "./store/reducer";
+import BookPreview from "./components/BookPreview/BookPreview";
 
 const theme = createTheme();
 
@@ -21,6 +22,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<LoginPage />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/bookpreview" element={<BookPreview />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </BookContext.Provider>

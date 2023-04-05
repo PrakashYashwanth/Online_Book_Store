@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -6,6 +7,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const CardComponent = ({ book }) => {
+  const navigate = useNavigate();
+  const handleLearnMore = () => {
+    navigate("/bookpreview");
+  };
   return (
     <Card sx={{ maxWidth: 345, mt: "1.5rem", ml: "0.5rem", mr: "0.5rem" }}>
       <CardMedia
@@ -26,7 +31,9 @@ const CardComponent = ({ book }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small" onClick={handleLearnMore}>
+          Learn More
+        </Button>
         <Button size="small">Add to cart</Button>
       </CardActions>
     </Card>
