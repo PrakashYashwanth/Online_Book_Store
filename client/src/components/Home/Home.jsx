@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { BookContext } from "../../store/contextStore";
+import { UserContext } from "../../store/contextStore";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
@@ -7,7 +7,7 @@ import CardComponent from "../CardComponent/CardComponent";
 import "./Home.scss";
 
 const Home = () => {
-  const [state] = useContext(BookContext);
+  const [state] = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [booksData, setBooksData] = useState([]);
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const Home = () => {
   return (
     <div className="bookCards">
       {booksData.map((book) => (
-        <CardComponent book={book} />
+        <CardComponent book={book} key={book.id} />
       ))}
     </div>
   );

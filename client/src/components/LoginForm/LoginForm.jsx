@@ -11,8 +11,8 @@ import { useFormik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { BookContext } from "../../store/contextStore";
-import { addAuthToken } from "../../store/actions";
-import { SET_AUTHORIZATION_TOKEN } from "../../store/constants";
+import { addAuthToken } from "../../store/user/actions";
+import { SET_AUTHORIZATION_TOKEN } from "../../store/user/constants";
 import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({

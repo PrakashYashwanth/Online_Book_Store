@@ -12,9 +12,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
-import { BookContext } from "../../store/contextStore";
-import { removeAuthToken } from "../../store/actions";
-import { REMOVE_AUTHORIZATION_TOKEN } from "../../store/constants";
+import { UserContext } from "../../store/contextStore";
+import { removeAuthToken } from "../../store/user/actions";
+import { REMOVE_AUTHORIZATION_TOKEN } from "../../store/user/constants";
 import { useNavigate } from "react-router-dom";
 
 const pages = ["Products", "Pricing", "Blog"];
@@ -23,7 +23,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, dispatch] = useContext(BookContext);
+  const [state, dispatch] = useContext(UserContext);
 
   const navigate = useNavigate();
 

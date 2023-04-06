@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -5,10 +6,20 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { BookContext } from "../../store/contextStore";
+import { setBookPreview } from "../../store/books/actions";
+import { SET_BOOK_PREVIEW } from "../../store/books/constants";
 
 const CardComponent = ({ book }) => {
+  const [_, dispatch] = useContext(BookContext);
   const navigate = useNavigate();
   const handleLearnMore = () => {
+    dispatch(
+      setBookPreview({
+        type: SET_BOOK_PREVIEW,
+        payload: book,
+      })
+    );
     navigate("/bookpreview");
   };
   return (

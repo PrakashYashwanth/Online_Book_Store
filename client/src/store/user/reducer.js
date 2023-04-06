@@ -3,7 +3,7 @@ import {
   REMOVE_AUTHORIZATION_TOKEN,
 } from "./constants";
 
-const Reducer = (state, action) => {
+const UserReducer = (state, action) => {
   switch (action.type) {
     case SET_AUTHORIZATION_TOKEN: {
       return {
@@ -22,4 +22,4 @@ const Reducer = (state, action) => {
   }
 };
 
-export default Reducer;
+export default UserReducer;
