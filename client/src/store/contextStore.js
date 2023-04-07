@@ -6,6 +6,7 @@ export const initialUserState = {
 
 export const initialBookState = {
   bookToDisplay: null,
+  booksAddedToCart: [],
 };
 
 export const UserContext = createContext();

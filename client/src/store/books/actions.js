@@ -11,4 +11,18 @@ const removeBookPreview = ({ type }) => {
   };
 };
 
-export { setBookPreview, removeBookPreview };
+const addBookToCart = ({ type, payload }) => {
+  return {
+    type,
+    payload,
+  };
+};
+
+const removeBookFromCart = ({ type, payload }) => {
+  return {
+    type,
+    payload,
+  };
+};
+
+export { setBookPreview, removeBookPreview, addBookToCart, removeBookFromCart };

@@ -7,13 +7,38 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { BookContext } from "../../store/contextStore";
 import { Button, useMediaQuery } from "@mui/material";
-import { removeBookPreview } from "../../store/books/actions";
-import { REMOVE_BOOK_PREVIEW } from "../../store/books/constants";
+import {
+  addBookToCart,
+  removeBookFromCart,
+  removeBookPreview,
+} from "../../store/books/actions";
+import {
+  ADD_BOOK_TO_CART,
+  REMOVE_BOOK_FROM_CART,
+  REMOVE_BOOK_PREVIEW,
+} from "../../store/books/constants";
 
 export default function BookPreview() {
   const [state, dispatch] = useContext(BookContext);
   const navigate = useNavigate();
   const MdMatches = useMediaQuery((theme) => theme.breakpoints.down("md"));
+
+  const handleAddToCart = () => {
+    dispatch(
+      addBookToCart({
+        type: ADD_BOOK_TO_CART,
+        payload: state.bookToDisplay,
+      })
+    );
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(
+      removeBookFromCart({
+        type: REMOVE_BOOK_FROM_CART,
+        payload: state.bookToDisplay.id,
+      })
+    );
+  };
 
   const handleGoBack = () => {
     dispatch(
@@ -83,7 +108,17 @@ export default function BookPreview() {
             <Button variant="contained" onClick={handleGoBack}>
               Go Back
             </Button>
-            <Button>Add to cart</Button>
+            {!state.booksAddedToCart?.some(
+              (bookItem) => bookItem.id === state.bookToDisplay.id
+            ) ? (
+              <Button size="small" onClick={handleAddToCart}>
+                Add to cart
+              </Button>
+            ) : (
+              <Button size="small" onClick={handleRemoveFromCart}>
+                Remove From cart
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Box>

@@ -7,11 +7,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { BookContext } from "../../store/contextStore";
-import { setBookPreview } from "../../store/books/actions";
-import { SET_BOOK_PREVIEW } from "../../store/books/constants";
+import {
+  addBookToCart,
+  removeBookFromCart,
+  setBookPreview,
+} from "../../store/books/actions";
+import {
+  ADD_BOOK_TO_CART,
+  REMOVE_BOOK_FROM_CART,
+  SET_BOOK_PREVIEW,
+} from "../../store/books/constants";
 
 const CardComponent = ({ book }) => {
-  const [_, dispatch] = useContext(BookContext);
+  const [state, dispatch] = useContext(BookContext);
   const navigate = useNavigate();
   const handleLearnMore = () => {
     dispatch(
@@ -21,6 +29,22 @@ const CardComponent = ({ book }) => {
       })
     );
     navigate("/bookpreview");
+  };
+  const handleAddToCart = () => {
+    dispatch(
+      addBookToCart({
+        type: ADD_BOOK_TO_CART,
+        payload: book,
+      })
+    );
+  };
+  const handleRemoveFromCart = () => {
+    dispatch(
+      removeBookFromCart({
+        type: REMOVE_BOOK_FROM_CART,
+        payload: book.id,
+      })
+    );
   };
   return (
     <Card sx={{ maxWidth: 345, mt: "1.5rem", ml: "0.5rem", mr: "0.5rem" }}>
@@ -45,7 +69,17 @@ const CardComponent = ({ book }) => {
         <Button size="small" onClick={handleLearnMore}>
           Learn More
         </Button>
-        <Button size="small">Add to cart</Button>
+        {!state.booksAddedToCart?.some(
+          (bookItem) => bookItem.id === book.id
+        ) ? (
+          <Button size="small" onClick={handleAddToCart}>
+            Add to cart
+          </Button>
+        ) : (
+          <Button size="small" onClick={handleRemoveFromCart}>
+            Remove From cart
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
