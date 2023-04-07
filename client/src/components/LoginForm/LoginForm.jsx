@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
-import { BookContext } from "../../store/contextStore";
+import { UserContext } from "../../store/contextStore";
 import { addAuthToken } from "../../store/user/actions";
 import { SET_AUTHORIZATION_TOKEN } from "../../store/user/constants";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const LoginForm = ({ displayingSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [_, dispatch] = useContext(BookContext);
+  const [_, dispatch] = useContext(UserContext);
   const mdMatches = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const SmMatches = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
