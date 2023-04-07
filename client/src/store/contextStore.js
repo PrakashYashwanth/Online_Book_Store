@@ -5,6 +5,7 @@ export const initialUserState = {
 };
 
 export const initialBookState = {
+  booksData: [],
   bookToDisplay: null,
   booksAddedToCart: [],
 };

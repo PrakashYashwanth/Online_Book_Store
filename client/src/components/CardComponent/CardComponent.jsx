@@ -72,11 +72,15 @@ const CardComponent = ({ book }) => {
         {!state.booksAddedToCart?.some(
           (bookItem) => bookItem.id === book.id
         ) ? (
-          <Button size="small" onClick={handleAddToCart}>
+          <Button size="small" variant="contained" onClick={handleAddToCart}>
             Add to cart
           </Button>
         ) : (
-          <Button size="small" onClick={handleRemoveFromCart}>
+          <Button
+            size="small"
+            variant="outlined"
+            onClick={handleRemoveFromCart}
+          >
             Remove From cart
           </Button>
         )}

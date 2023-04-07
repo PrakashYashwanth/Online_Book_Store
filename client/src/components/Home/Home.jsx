@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../store/contextStore";
+import { BookContext, UserContext } from "../../store/contextStore";
 import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import CardComponent from "../CardComponent/CardComponent";
 import "./Home.scss";
+import { addBooks } from "../../store/books/actions";
+import { ADD_BOOKS } from "../../store/books/constants";
 
 const Home = () => {
-  const [state] = useContext(UserContext);
+  const [userState] = useContext(UserContext);
+  const [bookState, bookDispatch] = useContext(BookContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [booksData, setBooksData] = useState([]);
   const navigate = useNavigate();
 
   const getBooksData = async () => {
@@ -17,7 +19,12 @@ const Home = () => {
       const res = await axios.get(
         "https://my-json-server.typicode.com/dmitrijt9/book-api-mock/books"
       );
-      setBooksData(res.data);
+      bookDispatch(
+        addBooks({
+          type: ADD_BOOKS,
+          payload: res.data,
+        })
+      );
     } catch (err) {
       console.log(err);
     } finally {
@@ -26,12 +33,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (!state.authorizationToken) {
+    if (!userState.authorizationToken) {
       navigate("/");
     } else {
-      getBooksData();
+      if (!bookState.booksData.length) getBooksData();
+      else setIsLoading(false);
     }
-  }, [state.authorizationToken]);
+  }, [userState.authorizationToken]);
 
   if (isLoading)
     return (
@@ -48,7 +56,7 @@ const Home = () => {
 
   return (
     <div className="bookCards">
-      {booksData.map((book) => (
+      {bookState.booksData.map((book) => (
         <CardComponent book={book} key={book.id} />
       ))}
     </div>

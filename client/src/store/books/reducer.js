@@ -1,4 +1,5 @@
 import {
+  ADD_BOOKS,
   ADD_BOOK_TO_CART,
   REMOVE_BOOK_FROM_CART,
   REMOVE_BOOK_PREVIEW,
@@ -7,6 +8,8 @@ import {
 
 const BookReducer = (state, action) => {
   switch (action.type) {
+    case ADD_BOOKS:
+      return { ...state, booksData: action.payload };
     case SET_BOOK_PREVIEW:
       return { ...state, bookToDisplay: action.payload };
     case REMOVE_BOOK_PREVIEW:
