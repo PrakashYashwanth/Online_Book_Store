@@ -12,18 +12,22 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
-import { UserContext } from "../../store/contextStore";
+import CartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { BookContext, UserContext } from "../../store/contextStore";
 import { removeAuthToken } from "../../store/user/actions";
 import { REMOVE_AUTHORIZATION_TOKEN } from "../../store/user/constants";
 import { useNavigate } from "react-router-dom";
+import { Stack } from "@mui/material";
+import "./NavBar.scss";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Cart"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [state, dispatch] = useContext(UserContext);
+  const [userState, userDispatch] = useContext(UserContext);
+  const [bookState] = useContext(BookContext);
 
   const navigate = useNavigate();
 
@@ -44,7 +48,7 @@ function NavBar() {
   const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
     if (event.target.textContent === "Logout") {
-      dispatch(
+      userDispatch(
         removeAuthToken({
           type: REMOVE_AUTHORIZATION_TOKEN,
         })
@@ -54,7 +58,7 @@ function NavBar() {
     }
   };
 
-  if (!state.authorizationToken) {
+  if (!userState.authorizationToken) {
     return (
       <AppBar position="static">
         <Container maxWidth="xl">
@@ -160,16 +164,29 @@ function NavBar() {
           >
             Online Book Store
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex", justifyContent: "flex-end" },
+            }}
+          >
+            <Stack direction="row" spacing={2} sx={{ mr: "2rem" }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    color: "white",
+                  }}
+                  startIcon={page === "Cart" ? <CartIcon /> : <></>}
+                >
+                  <span className="numberOfItems">
+                    {bookState.booksAddedToCart.length}
+                  </span>
+                  {page}
+                </Button>
+              ))}
+            </Stack>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
