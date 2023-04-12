@@ -15,6 +15,7 @@ import {
 import BookPreview from "./components/BookPreview/BookPreview";
 import UserReducer from "./store/user/reducer";
 import BookReducer from "./store/books/reducer";
+import CartPage from "./components/CartPage/CartPage";
 
 const theme = createTheme();
 
@@ -31,6 +32,7 @@ const App = () => {
               <Route exact path="/" element={<LoginPage />} />
               <Route path="/home" element={<Home />} />
               <Route path="/bookpreview" element={<BookPreview />} />
+              <Route path="/cart" element={<CartPage />} />
               <Route path="/*" element={<NotFound />} />
             </Routes>
           </UserContext.Provider>
