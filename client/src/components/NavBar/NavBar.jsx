@@ -40,9 +40,9 @@ function NavBar() {
     console.log("handleOpenUserMenu clicked", event.currentTarget);
   };
 
-  const handleCloseNavMenu = (event) => {
+  const handleCloseNavMenu = (_, page = "") => {
     setAnchorElNav(null);
-    console.log("handleCloseNavMenu clicked", event.currentTarget);
+    if (page === "Cart") navigate("/cart");
   };
 
   const handleCloseUserMenu = (event) => {
@@ -139,7 +139,10 @@ function NavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={(event) => handleCloseNavMenu(event, page)}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -174,7 +177,7 @@ function NavBar() {
               {pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={(event) => handleCloseNavMenu(event, page)}
                   sx={{
                     color: "white",
                   }}
