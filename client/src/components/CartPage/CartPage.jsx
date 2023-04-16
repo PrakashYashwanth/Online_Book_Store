@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { BookContext } from "../../store/contextStore";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -6,6 +9,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -27,43 +37,53 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const CartPage = () => {
   const [bookState] = useContext(BookContext);
-  console.log("bookState", bookState);
+  const navigate = useNavigate();
+  if (!bookState.booksAddedToCart.length)
+    return (
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent sx={{ textAlign: "center", pt: "2rem" }}>
+          <Typography variant="h3" color="red" gutterBottom>
+            No items in the cart
+          </Typography>
+          <Typography variant="h4">
+            Kindly add an item to see the list
+          </Typography>
+        </CardContent>
+        <CardActions sx={{ justifyContent: "center", mb: "2rem" }}>
+          <Button
+            size="large"
+            variant="contained"
+            onClick={() => navigate("/home")}
+          >
+            Go Back
+          </Button>
+        </CardActions>
+      </Card>
+    );
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ mt: "1.5rem" }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-            <StyledTableCell align="right">Calories</StyledTableCell>
-            <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-            <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+            <StyledTableCell>Title</StyledTableCell>
+            <StyledTableCell align="right">Author ID</StyledTableCell>
+            <StyledTableCell align="right">Pages</StyledTableCell>
+            <StyledTableCell align="right">ISBN</StyledTableCell>
+            <StyledTableCell align="right">Release Date</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {bookState.booksAddedToCart.map((row) => (
+            <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {row.name}
+                {row.title}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
+              <StyledTableCell align="right">{row.author_id}</StyledTableCell>
+              <StyledTableCell align="right">{row.pages}</StyledTableCell>
+              <StyledTableCell align="right">{row.isbn}</StyledTableCell>
+              <StyledTableCell align="right">{row.releaseDate}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
