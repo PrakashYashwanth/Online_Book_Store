@@ -44,7 +44,7 @@ module.exports = {
         test: /\.(s[ac]|c)ss$/i,
         use: [
           // order of adding items is important. Loaders are evaluated/executed from right to left (or from bottom to top)
-          MiniCssExtractPlugin.loader,
+          MODE === "development" ? "style-loader" : MiniCssExtractPlugin.loader,
           "css-loader",
           "postcss-loader",
           "sass-loader",
