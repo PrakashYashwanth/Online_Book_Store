@@ -68,7 +68,7 @@ const CartPage = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell>Title</StyledTableCell>
-            <StyledTableCell align="right">Author ID</StyledTableCell>
+            <StyledTableCell align="right">Author Name</StyledTableCell>
             <StyledTableCell align="right">Pages</StyledTableCell>
             <StyledTableCell align="right">ISBN</StyledTableCell>
             <StyledTableCell align="right">Release Date</StyledTableCell>
@@ -80,7 +80,13 @@ const CartPage = () => {
               <StyledTableCell component="th" scope="row">
                 {row.title}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.author_id}</StyledTableCell>
+              <StyledTableCell align="right">
+                {
+                  bookState.authorsData.find(
+                    (author) => author.id === row.author_id
+                  ).name
+                }
+              </StyledTableCell>
               <StyledTableCell align="right">{row.pages}</StyledTableCell>
               <StyledTableCell align="right">{row.isbn}</StyledTableCell>
               <StyledTableCell align="right">{row.releaseDate}</StyledTableCell>

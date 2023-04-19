@@ -5,6 +5,13 @@ const addBooks = ({ type, payload }) => {
   };
 };
 
+const addAuthors = ({ type, payload }) => {
+  return {
+    type,
+    payload,
+  };
+};
+
 const setBookPreview = ({ type, payload }) => {
   return {
     type,
@@ -34,6 +41,7 @@ const removeBookFromCart = ({ type, payload }) => {
 
 export {
   addBooks,
+  addAuthors,
   setBookPreview,
   removeBookPreview,
   addBookToCart,

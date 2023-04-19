@@ -6,6 +6,7 @@ export const initialUserState = {
 
 export const initialBookState = {
   booksData: [],
+  authorsData: [],
   bookToDisplay: null,
   booksAddedToCart: [],
 };

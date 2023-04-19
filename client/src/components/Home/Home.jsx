@@ -5,8 +5,8 @@ import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 import CardComponent from "../CardComponent/CardComponent";
 import "./Home.scss";
-import { addBooks } from "../../store/books/actions";
-import { ADD_BOOKS } from "../../store/books/constants";
+import { addBooks, addAuthors } from "../../store/books/actions";
+import { ADD_BOOKS, ADD_AUTHORS } from "../../store/books/constants";
 
 const Home = () => {
   const [userState] = useContext(UserContext);
@@ -17,12 +17,18 @@ const Home = () => {
   const getBooksData = async () => {
     try {
       const res = await axios.get(
-        "https://my-json-server.typicode.com/dmitrijt9/book-api-mock/books"
+        "https://my-json-server.typicode.com/dmitrijt9/book-api-mock/db"
       );
       bookDispatch(
         addBooks({
           type: ADD_BOOKS,
-          payload: res.data,
+          payload: res.data.books,
+        })
+      );
+      bookDispatch(
+        addAuthors({
+          type: ADD_AUTHORS,
+          payload: res.data.authors,
         })
       );
     } catch (err) {

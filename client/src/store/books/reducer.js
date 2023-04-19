@@ -1,4 +1,5 @@
 import {
+  ADD_AUTHORS,
   ADD_BOOKS,
   ADD_BOOK_TO_CART,
   REMOVE_BOOK_FROM_CART,
@@ -10,6 +11,8 @@ const BookReducer = (state, action) => {
   switch (action.type) {
     case ADD_BOOKS:
       return { ...state, booksData: action.payload };
+    case ADD_AUTHORS:
+      return { ...state, authorsData: action.payload };
     case SET_BOOK_PREVIEW:
       return { ...state, bookToDisplay: action.payload };
     case REMOVE_BOOK_PREVIEW:
