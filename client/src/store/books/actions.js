@@ -39,6 +39,20 @@ const removeBookFromCart = ({ type, payload }) => {
   };
 };
 
+const increaseCount = ({ type, payload }) => {
+  return {
+    type,
+    payload,
+  };
+};
+
+const decreaseCount = ({ type, payload }) => {
+  return {
+    type,
+    payload,
+  };
+};
+
 export {
   addBooks,
   addAuthors,
@@ -46,4 +60,6 @@ export {
   removeBookPreview,
   addBookToCart,
   removeBookFromCart,
+  increaseCount,
+  decreaseCount,
 };

@@ -34,7 +34,7 @@ const CardComponent = ({ book }) => {
     dispatch(
       addBookToCart({
         type: ADD_BOOK_TO_CART,
-        payload: book,
+        payload: { ...book, count: 1 },
       })
     );
   };

@@ -27,7 +27,7 @@ export default function BookPreview() {
     dispatch(
       addBookToCart({
         type: ADD_BOOK_TO_CART,
-        payload: state.bookToDisplay,
+        payload: { ...state.bookToDisplay, count: 0 },
       })
     );
   };
