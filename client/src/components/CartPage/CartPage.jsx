@@ -9,6 +9,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import IconButton from "@mui/material/IconButton";
 import {
   Button,
   Card,
@@ -16,6 +19,8 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { DECREASE_COUNT, INCREASE_COUNT } from "../../store/books/constants";
+import { decreaseCount, increaseCount } from "../../store/books/actions";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,7 +43,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const CartPage = () => {
-  const [bookState] = useContext(BookContext);
+  const [bookState, bookDispatch] = useContext(BookContext);
   const navigate = useNavigate();
   if (!bookState.booksAddedToCart.length)
     return (
@@ -72,6 +77,7 @@ const CartPage = () => {
             <StyledTableCell align="right">Pages</StyledTableCell>
             <StyledTableCell align="right">ISBN</StyledTableCell>
             <StyledTableCell align="right">Release Date</StyledTableCell>
+            <StyledTableCell align="right">Count</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -90,6 +96,47 @@ const CartPage = () => {
               <StyledTableCell align="right">{row.pages}</StyledTableCell>
               <StyledTableCell align="right">{row.isbn}</StyledTableCell>
               <StyledTableCell align="right">{row.releaseDate}</StyledTableCell>
+              <StyledTableCell
+                align="right"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  flexDirection: "row",
+                }}
+              >
+                <IconButton
+                  color="primary"
+                  aria-label="increase count"
+                  component="button"
+                  onClick={() =>
+                    bookDispatch(
+                      increaseCount({
+                        type: INCREASE_COUNT,
+                        payload: row,
+                      })
+                    )
+                  }
+                >
+                  <AddIcon />
+                </IconButton>
+                {row.count}
+                <IconButton
+                  color="primary"
+                  aria-label="decrease count"
+                  component="button"
+                  onClick={() =>
+                    bookDispatch(
+                      decreaseCount({
+                        type: DECREASE_COUNT,
+                        payload: row,
+                      })
+                    )
+                  }
+                >
+                  <RemoveIcon />
+                </IconButton>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

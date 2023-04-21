@@ -71,5 +71,6 @@ module.exports = {
   //below code fixes it
   devServer: {
     historyApiFallback: true,
+    open: true,
   },
 };

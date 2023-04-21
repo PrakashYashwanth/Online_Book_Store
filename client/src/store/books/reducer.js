@@ -35,7 +35,8 @@ const BookReducer = (state, action) => {
       return {
         ...state,
         booksAddedToCart: state.booksAddedToCart.map((book) => {
-          book.count = book.count++;
+          if (action.payload.id === book.id)
+            book.count = ++action.payload.count;
           return book;
         }),
       };
@@ -43,7 +44,8 @@ const BookReducer = (state, action) => {
       return {
         ...state,
         booksAddedToCart: state.booksAddedToCart.map((book) => {
-          book.count = book.count--;
+          if (action.payload.id === book.id)
+            book.count = --action.payload.count;
           return book;
         }),
       };
