@@ -129,7 +129,7 @@ const CartPage = () => {
                     bookDispatch(
                       decreaseCount({
                         type: DECREASE_COUNT,
-                        payload: row,
+                        payload: rows,
                       })
                     )
                   }
@@ -140,6 +140,7 @@ const CartPage = () => {
             </StyledTableRow>
           ))}
         </TableBody>
+        // need to add payment details
       </Table>
     </TableContainer>
   );
