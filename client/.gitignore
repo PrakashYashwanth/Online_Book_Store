@@ -8,6 +8,7 @@ package-lock.json
 
 #Compiled build files, dev files, and reports
 build
+dist
 .next
 coverage
 out
