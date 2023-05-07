@@ -7,11 +7,7 @@ node_modules
 package-lock.json
 
 #Compiled build files, dev files, and reports
-build
 dist
-.next
-coverage
-out
 
 # IDE/OS files
 .vscode
